@@ -1,0 +1,19 @@
+.header img{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin: auto;
+    display: block;
+    width: 30rem;
+}
+
+@media (min-width: 512px) {
+    .header img{
+        width: 40rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .header img{
+        width: 55rem;
+    }
+}
