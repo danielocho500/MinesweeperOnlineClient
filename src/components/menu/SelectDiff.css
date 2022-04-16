@@ -1,0 +1,27 @@
+.diff{
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.diff-item{
+    background-color: rgb(185, 166, 137);
+    padding: 1rem;
+    border-radius: 2rem;
+    text-align: center;
+    color: black;
+}
+
+.diff-item:hover{
+    background-color: rgb(174, 154, 123);
+    cursor: pointer;
+}
+
+.diff-item h3{
+    font-size: 2.5rem;
+}
+
+.diff-item h4{
+    color: rgb(70, 66, 66);
+}

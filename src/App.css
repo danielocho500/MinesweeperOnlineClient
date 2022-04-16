@@ -1,7 +1,10 @@
 html{
-    background-color: #b0a7a7;
     box-sizing: border-box;
     font-size: 62.5%;
+}
+
+body{
+    background-color: #b0a7a7;
 }
 
 *,*:before,*:after{

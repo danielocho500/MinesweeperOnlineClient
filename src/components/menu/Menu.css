@@ -1,0 +1,47 @@
+.title{
+    color: black;
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+.grid-menu{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+}
+@media (min-width: 512px) {
+    .grid-menu{
+        flex-direction: row;
+        gap: 10%;
+        padding-top: 3rem;
+    }
+}
+
+.menu-item{
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding-top: .5rem;
+    background-color: rgb(174, 174, 74);
+    width: 80%;
+}
+
+.menu-item h2{
+    text-align: center; 
+    color: black;
+    font-size: 2rem;
+}
+
+.menu-img{
+    margin: 0 auto;
+    width: 50%;
+}
+
+.menu-item button{
+    margin: 0 auto;
+    padding: 1rem;
+    width: 100%;
+    border-bottom-left-radius: .9rem;
+    border-bottom-right-radius: .9rem;
+    font-size: 2rem;
+}
