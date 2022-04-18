@@ -1,0 +1,108 @@
+.grid-table{
+    margin: 0 auto;       
+    margin-bottom: 4rem;      
+    height: 100%;
+    width: 100%;      
+    display: flex;
+    flex-wrap: wrap;
+    background-color: gray;
+    border: 10px solid #dcd6bc;
+    background-color: #dcd6bc;                                                                                         ;
+}
+
+.easy{
+    max-width: 45rem;
+}
+
+.normal{
+    max-width: 55rem;
+}
+
+.hard{    
+    max-width: 100rem;
+}
+
+.easy-square{
+  width: 12.5%;
+  aspect-ratio: 1/1;
+}
+
+.normal-square{
+  width: 6.25%;
+  aspect-ratio: 1/1;
+}
+
+.hard-square{
+  width: 3.33333%;
+  aspect-ratio: 1/1;
+}
+
+div {
+    font-size: 22px;
+    text-align: center;
+    font-family: 'Roboto Mono', monospace;
+  
+  }
+
+
+  .valid {
+      border: 5px solid;
+      border-color: #f5f3eb #bab7a9 #bab7a9 #fff9db;
+      box-sizing: border-box;
+    }
+  
+  .checked {
+    border: 2px solid;
+    background-color: #cecab7;
+    border-color: #9c998d;
+    box-sizing: border-box;
+    padding-top: .3rem;
+  }
+  
+  .number{
+    height: 40px;
+    width: 40px;
+    border: 2px solid;
+    background-color: #cecab7;
+    border-color: #9c998d;
+    box-sizing: border-box;
+    padding-top: .3rem;
+  }
+
+  .one {
+    color: blue;
+  }
+  
+  .two {
+    color: green;
+  }
+  
+  .three {
+    color: red;
+  }
+  
+  .four{
+    color: rgb(1, 1, 145)
+  }
+
+  .five{
+    color: rgb(197, 0, 0);
+
+  }
+
+  .six{
+    color: orangered;
+  }
+
+  .flag{
+      background-image: url('../../img/flag.svg');
+      background-size: 100%;
+  }
+
+  .bomb{
+      background-image: url('../../img/bomb.svg');
+      background-size: 80%;
+      background-repeat: no-repeat;
+      background-position-x: 80%;
+      background-position-y: 50%;
+  }

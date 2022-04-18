@@ -3,7 +3,7 @@ import { ScreenType } from '../helper/ScreenType';
 
 import './SelectDiff.css';
 
-export const SelectDiff = ({setScreen, setMatch}) => {
+export const SelectDiff = ({setScreen, setMatch, setDiff}) => {
 
     const handleDiffEasy = e => {
         setMatch({
@@ -11,6 +11,8 @@ export const SelectDiff = ({setScreen, setMatch}) => {
             height: 8,
             width: 8
         })
+
+        setDiff('easy');
 
         setScreen(ScreenType.SoloMatch);
     }
@@ -22,6 +24,8 @@ export const SelectDiff = ({setScreen, setMatch}) => {
             width: 16
         })
 
+        setDiff('normal')
+
         setScreen(ScreenType.SoloMatch);
     }
 
@@ -31,6 +35,8 @@ export const SelectDiff = ({setScreen, setMatch}) => {
             height: 16,
             width: 30
         })
+
+        setDiff('hard')
 
         setScreen(ScreenType.SoloMatch);
     }

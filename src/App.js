@@ -5,7 +5,7 @@ import { Menu } from "./components/menu/Menu";
 import { useState } from "react";
 import { ScreenType } from "./components/helper/ScreenType";
 import { SelectDiff } from "./components/menu/SelectDiff";
-import { SoloMatch } from "./SoloMatch/SoloMatch";
+import { SoloMatch } from "./components/SoloMatch/SoloMatch"
 
 function App() {
 
@@ -15,6 +15,7 @@ function App() {
       height: 1,
       width: 1
     })
+    const [diff, setDiff] = useState('easy');
 
     const renderSwitch = (param) =>{
       switch (param) {
@@ -22,10 +23,10 @@ function App() {
           return <Menu setScreen={setScreen}/>
 
         case ScreenType.MenuDifficulty:
-          return <SelectDiff setScreen={setScreen} setMatch={setMatch}/>
+          return <SelectDiff setScreen={setScreen} setMatch={setMatch} setDiff={setDiff}/>
 
         case ScreenType.SoloMatch:
-          return <SoloMatch setScreen={setScreen} match={match}/>
+          return <SoloMatch setScreen={setScreen} match={match} diff={diff}/>
 
         default:
           return <Menu setScreen={setScreen}/>
