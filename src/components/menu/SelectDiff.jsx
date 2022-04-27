@@ -9,7 +9,8 @@ export const SelectDiff = ({setScreen, setMatch, setDiff}) => {
         setMatch({
             bombs: 10,
             height: 8,
-            width: 8
+            width: 8,
+            diff: 'easy'
         })
 
         setDiff('easy');
@@ -21,7 +22,8 @@ export const SelectDiff = ({setScreen, setMatch, setDiff}) => {
         setMatch({
             bombs: 60,
             height: 16,
-            width: 16
+            width: 16,
+            diff: 'normal'
         })
 
         setDiff('normal')
@@ -33,7 +35,8 @@ export const SelectDiff = ({setScreen, setMatch, setDiff}) => {
         setMatch({
             bombs: 99,
             height: 16,
-            width: 30
+            width: 30,
+            diff: 'hard'
         })
 
         setDiff('hard')

@@ -2,10 +2,12 @@ import { Header } from "./components/basics/Header";
 
 import './App.css'
 import { Menu } from "./components/menu/Menu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScreenType } from "./components/helper/ScreenType";
 import { SelectDiff } from "./components/menu/SelectDiff";
 import { SoloMatch } from "./components/SoloMatch/SoloMatch"
+import { socket } from "./socket/socket";
+
 
 function App() {
 
@@ -26,7 +28,7 @@ function App() {
           return <SelectDiff setScreen={setScreen} setMatch={setMatch} setDiff={setDiff}/>
 
         case ScreenType.SoloMatch:
-          return <SoloMatch setScreen={setScreen} match={match} diff={diff}/>
+          return <SoloMatch setScreen={setScreen} match={match} diff={diff} socket={socket}/>
 
         default:
           return <Menu setScreen={setScreen}/>

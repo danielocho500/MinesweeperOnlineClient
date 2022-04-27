@@ -1,7 +1,7 @@
 .grid-table{
     margin: 0 auto;       
     margin-bottom: 4rem;      
-    height: 100%;
+    
     width: 100%;      
     display: flex;
     flex-wrap: wrap;
@@ -15,7 +15,7 @@
 }
 
 .normal{
-    max-width: 55rem;
+    max-width: 70rem;
 }
 
 .hard{    
@@ -25,23 +25,24 @@
 .easy-square{
   width: 12.5%;
   aspect-ratio: 1/1;
+  font-size: 22px;
 }
 
 .normal-square{
   width: 6.25%;
   aspect-ratio: 1/1;
+  font-size: 19px;
 }
 
 .hard-square{
   width: 3.33333%;
   aspect-ratio: 1/1;
+  font-size: 12px;
 }
 
 div {
-    font-size: 22px;
     text-align: center;
     font-family: 'Roboto Mono', monospace;
-  
   }
 
 
@@ -56,17 +57,16 @@ div {
     background-color: #cecab7;
     border-color: #9c998d;
     box-sizing: border-box;
-    padding-top: .3rem;
   }
   
   .number{
-    height: 40px;
-    width: 40px;
     border: 2px solid;
     background-color: #cecab7;
     border-color: #9c998d;
     box-sizing: border-box;
-    padding-top: .3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .one {
