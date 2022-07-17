@@ -1,40 +1,54 @@
 import React, { useEffect, useState } from 'react'
 
-export const Square = ({id, diff, handleClick, positionX, positionY, type}) => {
-    
-    const [state, setstate] = useState('')
-    const [value, setvalue] = useState('');
+export const Square = ({id, diff, handleClick, positionX, positionY, isActive, value, isFlag}) => {
 
     const handleClass = () => {
-        switch (type) {
-            case 'x':
-                return `valid ${diff}-square`
-            case 0:
-                return `valid checked ${diff}-square`
-            case 1:
-                return `number checked one ${diff}-square `
-            case 2:
-                return `number checked two ${diff}-square `
-            case 3:
-                return `number checked three ${diff}-square `
-            case 4:
-                return `number checked four ${diff}-square `
-            case 5:
-                return `number checked five ${diff}-square `
-            case 6:
-                return `number checked six ${diff}-square `
-            default:
-                break;
+
+        if(isActive){
+            switch (value) {
+                case 'b':
+                    return `checked ${diff}-square bomb`
+                case 0:
+                    return `valid checked ${diff}-square`
+                case 1:
+                    return `number checked one ${diff}-square `
+                case 2:
+                    return `number checked two ${diff}-square `
+                case 3:
+                    return `number checked three ${diff}-square `
+                case 4:
+                    return `number checked four ${diff}-square `
+                case 5:
+                    return `number checked five ${diff}-square `
+                case 6:
+                    return `number checked six ${diff}-square `
+                case 7:
+                    return `number checked six ${diff}-square `
+                case 8:
+                    return `number checked six ${diff}-square `
+                default:
+                    break;
+            }
         }
+        else{
+            if(isFlag){
+                return `valid ${diff}-square flag`
+            }
+            else
+                return `valid ${diff}-square`
+        }
+
+
+        
         
     }
 
     return(
         <div id={id} className={handleClass()} onClick={() => {handleClick(positionX, positionY)}}>
             {
-                (type != 0 && type != 'x') 
+                (isActive && value != 'b' && value != 0) 
                 ?
-                    <p>{type}</p>
+                        <p>{value}</p>
                 :
                     ''
             }

@@ -43,6 +43,7 @@ export const SoloMatch = ({match, diff, socket}) => {
                  )
             }
         }
+
     }, [socket])    
 
     const handleClick = (posX, posY) => {
@@ -68,7 +69,8 @@ export const SoloMatch = ({match, diff, socket}) => {
         setIsInitialized(true)
     }
 
-    socket.on('playSquare', ({actualMatch, win, lose}) => {
+    socket.on('playSquare', ({actualMatch}) => {
+
         const squares = [];
 
         let x = new Cont();
@@ -81,7 +83,7 @@ export const SoloMatch = ({match, diff, socket}) => {
                     positionX: x.getValue(),
                     positionY: y.getValue(),
                     id: id.getCont(),
-                    type: square
+                    ...square
                 })
                 x.getCont();
             });
@@ -89,19 +91,15 @@ export const SoloMatch = ({match, diff, socket}) => {
             x.reset();
         });
 
-        console.log(squares)
         setsquares(squares);
-
     })
-
-    console.log(squares)
 
     return (
         <div className='container'>
             <div className={`${diff} grid-table`} id='grid'>
                 {
                     squares.map(element =>{ 
-                        return <Square key={element.id} diff={diff} handleClick={handleClick} positionX={element.positionX} positionY={element.positionY} type={element.type}/>
+                        return <Square key={element.id} diff={diff} handleClick={handleClick} positionX={element.positionX} positionY={element.positionY} isActive={element.isActive} value={element.value} isFlag={element.isFlag}/>
                     })
                 }               
             </div>
