@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export const Square = ({id, diff, handleClick, positionX, positionY, isActive, value, isFlag}) => {
+export const Square = ({id, diff, handleClick, positionX, positionY, isActive, value, isFlag, handleFlag}) => {
 
     const handleClass = () => {
 
@@ -44,7 +44,7 @@ export const Square = ({id, diff, handleClick, positionX, positionY, isActive, v
     }
 
     return(
-        <div id={id} className={handleClass()} onClick={() => {handleClick(positionX, positionY)}}>
+        <div className={handleClass()} onClick={() => {handleClick(positionX, positionY, id)}} onContextMenu={(e) => {handleFlag(e,positionX, positionY, id)}}>
             {
                 (isActive && value != 'b' && value != 0) 
                 ?

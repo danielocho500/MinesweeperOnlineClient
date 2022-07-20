@@ -106,3 +106,12 @@ div {
       background-position-x: 80%;
       background-position-y: 50%;
   }
+
+  .bombs{
+      background-color: black;
+      color: red;
+      font-size: 25px;
+      width: 6%;
+      margin: auto;
+      margin-bottom: 2%;
+  }

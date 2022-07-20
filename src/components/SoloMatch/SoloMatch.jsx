@@ -27,6 +27,7 @@ export const SoloMatch = ({match, diff, socket}) => {
     const {bombs, height, width} = match
     const [squares, setsquares] = useState([])
     const [isInitialized, setIsInitialized] = useState(false)
+    const [bombsLeft, setbombsLeft] = useState(bombs)
 
     useEffect(() => {
         setsquares([]);
@@ -46,18 +47,39 @@ export const SoloMatch = ({match, diff, socket}) => {
 
     }, [socket])    
 
-    const handleClick = (posX, posY) => {
+    const handleClick = (posX, posY, id) => {
 
         if(!isInitialized){
             createMatch(posX, posY);
             return;
         }
-        else{
-            socket.emit('sendPlay', {
-                posX,
-                posY
-            })
-        }
+
+        const {isActive} = squares[id-1]
+
+        if(isActive)
+            return
+
+        socket.emit('sendPlay', {
+            posX,
+            posY
+        })
+    }
+
+    const handleFlag = (e,posX, posY, id) => {
+        e.preventDefault()
+        
+        if(!isInitialized)
+            return
+
+        const {isActive} = squares[id-1]
+
+        if(isActive)
+            return
+
+        socket.emit('flag',{
+            posX,
+            posY
+        })
     }
 
     const createMatch = (posX, posY) => {
@@ -69,37 +91,70 @@ export const SoloMatch = ({match, diff, socket}) => {
         setIsInitialized(true)
     }
 
-    socket.on('playSquare', ({actualMatch}) => {
-
+    socket.on('playSquare', ({actualMatch = {}, completeMatch = {}, win = false, lose = false}) => {
+        
         const squares = [];
 
         let x = new Cont();
         let y = new Cont();
         let id = new Cont();
 
-        actualMatch.forEach(row => {
-            row.forEach(square => {
-                squares.push({
-                    positionX: x.getValue(),
-                    positionY: y.getValue(),
-                    id: id.getCont(),
-                    ...square
-                })
-                x.getCont();
+        if(lose){
+            completeMatch.forEach(row => {
+                row.forEach(square => {
+                    squares.push({
+                        positionX: x.getValue(),
+                        positionY: y.getValue(),
+                        id: id.getCont(),
+                        ...square
+                    })
+                    x.getCont();
+                });
+                y.getCont();
+                x.reset();
             });
-            y.getCont();
-            x.reset();
-        });
+
+            setbombsLeft(0);
+        }
+
+        else{
+
+            let flagCounter = 0;
+
+            actualMatch.forEach(row => {
+                row.forEach(square => {
+                    squares.push({
+                        positionX: x.getValue(),
+                        positionY: y.getValue(),
+                        id: id.getCont(),
+                        ...square
+                    })
+
+                    if(square.isFlag)
+                        flagCounter++;
+
+                    x.getCont();
+                });
+                y.getCont();
+                x.reset();
+            });
+
+            setbombsLeft(bombs - flagCounter)
+        }
 
         setsquares(squares);
     })
 
     return (
         <div className='container'>
+            <div className="info">
+                <div className="bombs"> {bombsLeft} </div>
+            </div>
+        
             <div className={`${diff} grid-table`} id='grid'>
                 {
                     squares.map(element =>{ 
-                        return <Square key={element.id} diff={diff} handleClick={handleClick} positionX={element.positionX} positionY={element.positionY} isActive={element.isActive} value={element.value} isFlag={element.isFlag}/>
+                        return <Square key={element.id} id={element.id} diff={diff} handleClick={handleClick} positionX={element.positionX} positionY={element.positionY} isActive={element.isActive} value={element.value} isFlag={element.isFlag} handleFlag={handleFlag}/>
                     })
                 }               
             </div>
