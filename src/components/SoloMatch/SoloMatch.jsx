@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 import './SoloMatch.css';
 import { Square } from './Square';
+import Swal from 'sweetalert2';
+
+import reload from '../../img/reload.svg';
 
 class Cont {
     constructor(){
@@ -27,7 +30,10 @@ export const SoloMatch = ({match, diff, socket}) => {
     const {bombs, height, width} = match
     const [squares, setsquares] = useState([])
     const [isInitialized, setIsInitialized] = useState(false)
+    const [isFinalized, setIsFinalized] = useState(false)
     const [bombsLeft, setbombsLeft] = useState(bombs)
+    const [isClickable, setIsClickable] = useState(true)
+
 
     useEffect(() => {
         setsquares([]);
@@ -45,6 +51,90 @@ export const SoloMatch = ({match, diff, socket}) => {
             }
         }
 
+        socket.on('playSquare', ({actualMatch = {}, completeMatch = {}, win = false, lose = false}) => {
+
+            const squares = [];
+    
+            let x = new Cont();
+            let y = new Cont();
+            let id = new Cont();
+    
+            console.log(`Win: ${win} Lose: ${lose}`)
+    
+            if(lose){
+                Swal.fire('You lose :c')
+                setIsFinalized(true)
+                completeMatch.forEach(row => {
+                    row.forEach(square => {
+                        squares.push({
+                            positionX: x.getValue(),
+                            positionY: y.getValue(),
+                            id: id.getCont(),
+                            ...square
+                        })
+                        x.getCont();
+                    });
+                    y.getCont();
+                    x.reset();
+                });
+    
+                setbombsLeft(0);
+            }
+    
+            else if(win){
+                Swal.fire('You Win (:')
+                setIsFinalized(true)
+               
+                let flagCounter = 0;
+    
+                actualMatch.forEach(row => {
+                    row.forEach(square => {
+                        squares.push({
+                            positionX: x.getValue(),
+                            positionY: y.getValue(),
+                            id: id.getCont(),
+                            ...square
+                        })
+    
+                        if(square.isFlag)
+                            flagCounter++;
+    
+                        x.getCont();
+                    });
+                    y.getCont();
+                    x.reset();
+                });
+            }
+    
+            else{
+                setIsClickable(true)
+                let flagCounter = 0;
+    
+                actualMatch.forEach(row => {
+                    row.forEach(square => {
+                        squares.push({
+                            positionX: x.getValue(),
+                            positionY: y.getValue(),
+                            id: id.getCont(),
+                            ...square
+                        })
+    
+                        if(square.isFlag)
+                            flagCounter++;
+    
+                        x.getCont();
+                    });
+                    y.getCont();
+                    x.reset();
+                });
+    
+                setbombsLeft(bombs - flagCounter)
+            }
+    
+            setIsClickable(true)
+            setsquares(squares);
+        })
+
     }, [socket])    
 
     const handleClick = (posX, posY, id) => {
@@ -54,10 +144,18 @@ export const SoloMatch = ({match, diff, socket}) => {
             return;
         }
 
-        const {isActive} = squares[id-1]
-
-        if(isActive)
+        if(isFinalized)
             return
+
+        if(!isClickable)
+            return
+
+        const {isActive, isFlag} = squares[id-1]
+
+        if(isActive || isFlag)
+            return
+
+        setIsClickable(false)
 
         socket.emit('sendPlay', {
             posX,
@@ -71,15 +169,44 @@ export const SoloMatch = ({match, diff, socket}) => {
         if(!isInitialized)
             return
 
+        if(!isClickable)
+            return
+
         const {isActive} = squares[id-1]
 
         if(isActive)
             return
 
+        if(isFinalized)
+            return
+
+        setIsClickable(false)
+
         socket.emit('flag',{
             posX,
             posY
         })
+    }
+
+    const handleReload = () => {
+        setIsFinalized(false)
+        setIsInitialized(false)
+        setIsClickable(true)
+
+        setsquares([]);
+        let id = new Cont();
+
+        for (let i = 0; i < height; i++) {
+            for(let j = 0; j < width; j++){
+                 setsquares(squaresOld => [...squaresOld, {
+                    positionX: j,
+                    positionY: i,
+                    id: id.getCont(),
+                    type: 'x'
+                 }]
+                 )
+            }
+        }
     }
 
     const createMatch = (posX, posY) => {
@@ -91,65 +218,15 @@ export const SoloMatch = ({match, diff, socket}) => {
         setIsInitialized(true)
     }
 
-    socket.on('playSquare', ({actualMatch = {}, completeMatch = {}, win = false, lose = false}) => {
-        
-        const squares = [];
-
-        let x = new Cont();
-        let y = new Cont();
-        let id = new Cont();
-
-        if(lose){
-            completeMatch.forEach(row => {
-                row.forEach(square => {
-                    squares.push({
-                        positionX: x.getValue(),
-                        positionY: y.getValue(),
-                        id: id.getCont(),
-                        ...square
-                    })
-                    x.getCont();
-                });
-                y.getCont();
-                x.reset();
-            });
-
-            setbombsLeft(0);
-        }
-
-        else{
-
-            let flagCounter = 0;
-
-            actualMatch.forEach(row => {
-                row.forEach(square => {
-                    squares.push({
-                        positionX: x.getValue(),
-                        positionY: y.getValue(),
-                        id: id.getCont(),
-                        ...square
-                    })
-
-                    if(square.isFlag)
-                        flagCounter++;
-
-                    x.getCont();
-                });
-                y.getCont();
-                x.reset();
-            });
-
-            setbombsLeft(bombs - flagCounter)
-        }
-
-        setsquares(squares);
-    })
-
     return (
         <div className='container'>
-            <div className="info">
-                <div className="bombs"> {bombsLeft} </div>
-            </div>
+            {
+                (!isFinalized)
+                ? <div className="bombs"> {bombsLeft} </div>
+                :  <div className="reload" onClick={handleReload}>
+                        <img className="img" src={reload}/>
+                   </div>
+            }
         
             <div className={`${diff} grid-table`} id='grid'>
                 {
@@ -160,5 +237,6 @@ export const SoloMatch = ({match, diff, socket}) => {
             </div>
         </div>
 
+        
     )
 }

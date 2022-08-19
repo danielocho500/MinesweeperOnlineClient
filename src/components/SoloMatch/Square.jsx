@@ -6,8 +6,8 @@ export const Square = ({id, diff, handleClick, positionX, positionY, isActive, v
 
         if(isActive){
             switch (value) {
-                case 'b':
-                    return `checked ${diff}-square bomb`
+                case "b":
+                    return `valid one ${diff}-square`
                 case 0:
                     return `valid checked ${diff}-square`
                 case 1:
@@ -34,17 +34,16 @@ export const Square = ({id, diff, handleClick, positionX, positionY, isActive, v
             if(isFlag){
                 return `valid ${diff}-square flag`
             }
+            else if(value == 'b'){
+                return `checked ${diff}-square bomb`
+            }
             else
                 return `valid ${diff}-square`
-        }
-
-
-        
-        
+        }        
     }
 
     return(
-        <div className={handleClass()} onClick={() => {handleClick(positionX, positionY, id)}} onContextMenu={(e) => {handleFlag(e,positionX, positionY, id)}}>
+        <div className={handleClass()} onMouseDown="party.confetti(this)" onClick={() => {handleClick(positionX, positionY, id)}} onContextMenu={(e) => {handleFlag(e,positionX, positionY, id)}}>
             {
                 (isActive && value != 'b' && value != 0) 
                 ?

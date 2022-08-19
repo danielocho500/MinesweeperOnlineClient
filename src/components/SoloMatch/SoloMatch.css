@@ -115,3 +115,16 @@ div {
       margin: auto;
       margin-bottom: 2%;
   }
+
+  .reload{
+    background-color: rgb(128, 128, 38);
+    width: 60px;
+    padding: 10px;
+    margin: auto;
+    margin-bottom: 15px;
+    cursor: pointer;
+  }
+
+  .reload img{
+    width: 40px;
+  }
